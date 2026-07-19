@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,16 +25,17 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .card {
-            /* Now using the sandy-gradient background instead of plain white */
             background: var(--card-bg);
             padding: 35px 25px;
             border-radius: 28px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             max-width: 410px;
             width: 100%;
+            box-sizing: border-box;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
@@ -42,7 +44,7 @@
             margin-bottom: 28px;
         }
 
-        /* Minimalist Thin Gold Ring */
+        /* Elegant Thin Gold Ring around the logo */
         .brand-logo {
             width: 90px;
             height: 90px;
@@ -50,7 +52,6 @@
             margin: 0 auto 15px auto;
             object-fit: cover;
             border-radius: 50%;
-            /* Thin 2px gold border */
             border: 2px solid #d4af37;
             box-shadow: 0 4px 8px rgba(212, 175, 55, 0.3);
         }
@@ -97,6 +98,8 @@
             font-size: 15px;
             background-color: #ffffff;
             color: var(--text-dark);
+            box-sizing: border-box;
+            font-family: inherit;
         }
 
         .btn-submit {
@@ -111,6 +114,7 @@
             cursor: pointer;
             margin-top: 10px;
             box-shadow: 0 5px 15px rgba(224, 122, 95, 0.3);
+            text-transform: uppercase;
         }
 
         .quick-links {
@@ -135,7 +139,7 @@
             color: var(--primary);
             font-weight: 600;
             font-size: 14px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.5);
             margin-bottom: 10px;
@@ -167,11 +171,13 @@
         </div>
         <div class="form-group">
             <label>👥 Guests</label>
-            <select id="guests">
+            <select id="guests" required>
                 <option value="1">1 Guest</option>
                 <option value="2">2 Guests</option>
                 <option value="3">3 Guests</option>
                 <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+                <option value="6+">6+ Guests</option>
             </select>
         </div>
         <button type="submit" class="btn-submit">Check Availability</button>
@@ -185,12 +191,25 @@
 </div>
 
 <script>
+    // Automatically disables all previous dates in the calendar
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkin').min = today;
+    document.getElementById('checkout').min = today;
+
+    // Dynamically update checkout min date based on check-in selection
+    document.getElementById('checkin').addEventListener('change', function() {
+        document.getElementById('checkout').min = this.value;
+    });
+
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const checkin = document.getElementById('checkin').value;
         const checkout = document.getElementById('checkout').value;
         const guests = document.getElementById('guests').value;
-        const msg = `Hi, I'd like to check availability:\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}`;
+        
+        // Exact custom message requested by you
+        const msg = `Hii, Sea Zoe Beach Homes Staycation I'd like to check availability for a staycation!\n\n📅 Check-in: ${checkin}\n📅 Check-out: ${checkout}\n👥 Guests: ${guests}`;
+        
         window.location.href = `https://wa.me/919490675816?text=${encodeURIComponent(msg)}`;
     });
 </script>
